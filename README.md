@@ -5,9 +5,9 @@ Our topic is to design an algorithm to recommend items based on the likes and di
 
 ## Problem Formulation
 ### Input
-Given a set of users U = {u<sub>1</sub>, u<sub>2</sub>, …, u<sub>i</sub>, …,u<sub>n</sub>},  Each user U<sub>i</sub> has a set of likes L<sub>i</sub> and dislikes D<sub>i</sub>. . Also, we are given a User Ui.
+Given a set of users U = {u<sub>1</sub>, u<sub>2</sub>, …, u<sub>i</sub>, …,u<sub>n</sub>},  Each user U<sub>i</sub> has a set of likes L<sub>i</sub> and dislikes D<sub>i</sub>.
 ### Output
-A list of recommended items for User Ui based on the likes and dislikes of Users similar to U<sub>i</sub>. 
+A list of recommended items for User U<sub>i</sub> based on the likes and dislikes of Users similar to U<sub>i</sub>. 
 ### Similarity Calculation
 We will calculate the similarity between users via:
 
