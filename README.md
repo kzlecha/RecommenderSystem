@@ -3,6 +3,13 @@ A search engine that searches for similarities and dissimilarities among users t
 
 Our topic is to design an algorithm to recommend items based on the likes and dislikes of a user and their similarities to other users.
 
+## Contributors
+The following algorithm was created by:
+* **Cameron Chong** - [camcamchong](https://github.com/camcamchong)
+* **Kathryn Lecha** - [kzlecha](https://github.com/kzlecha)
+* **Emily Medema** - [emedema](https://github.com/emedema)
+* **Lauren St.Clair** - [laurenstclair](https://github.com/laurenstclair)
+
 ## Problem Formulation
 ### Input
 Given a set of users U = {u<sub>1</sub>, u<sub>2</sub>, …, u<sub>i</sub>, …,u<sub>n</sub>},  Each user U<sub>i</sub> has a set of likes L<sub>i</sub> and dislikes D<sub>i</sub>.
