@@ -8,9 +8,9 @@ def compareInv(A,B):
     Compare the lists and return the number of inversions
     '''
     numInv = 0
-    for i in range(0, len(A)):
-        for j in range(0, len(A)):
-            if A[i] != B[j] and i != j:
+    for i in range(0, len(A)-1):
+        for j in range(i+1, len(A)):
+            if A[i] != B[j] and i!=j:
                 numInv = numInv + 1
     return numInv
 
@@ -32,8 +32,8 @@ def get_similarity_matrix(data, index):
     less inversions is more simialar
     '''
     # create list of similaities
-    similarity_series = pd.Series(0, index=data.index)
-    for i in df.index:
+    similarity_series = Series(0, index=data.index)
+    for i in data.index: 
         if(i != index):
             a=get_user_array(data, i)
             sim = 0
@@ -62,3 +62,4 @@ def recommend_items(data, index, similarity_series):
                 list_items.append(item)
 
     return list_items
+
