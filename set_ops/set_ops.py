@@ -1,5 +1,3 @@
-# from datetime import datetime
-
 from pandas import DataFrame, Series, read_csv
 
 def sim(L1, L2, D1, D2):
@@ -16,7 +14,7 @@ def sim(L1, L2, D1, D2):
                 |L1 intersection D2| - |L2 intersection D1|) / 
                 |L1 union L2 union D1 union D2|
     '''
-    num = 0;
+    num = 0
     initial = len((L1.intersection(L2))) + len((D1.intersection(D2))) - len((L1.intersection(D2))) - len((L2.intersection(D1)))
     divisor = len((L1.union(L2, D1, D2)))
     num = initial/divisor
