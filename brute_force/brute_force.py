@@ -34,20 +34,19 @@ def get_similarity_series(likes, dislikes, index):
     return the sorted list of similarities of all users to the given
     less inversions is more simialar
     '''
-    user_likes = get_user_array(likes, index)
-    user_dislikes = get_user_array(dislikes, index)
+    given_user_likes = get_user_array(likes, index)
+    given_user_dislikes = get_user_array(dislikes, index)
     # create list of similaities
-    similarity_series = Series(0, index=data.index)
-    for i in data.index: 
+    similarity_series = Series(0, index=likes.index)
+    for i in likes.index: 
         if(i != index):
             sim = 0
             simLikes = 0
             simDislikes = 0
             simLikes = compareInv(given_user_likes, get_user_array(likes,i))
             simDislikes = compareInv(given_user_dislikes, get_user_array(dislikes,i))
-            sim = simLikes + simNot
-            simArray = simArray.append({"Sim":sim, "User":i}, ignore_index = True)
-            simSeries.loc[i] = sim
+            sim = simLikes + simDislikes
+            similarity_series.loc[i] = sim
 
     # sort the list
     similarity_series.sort_values(ascending=True)
@@ -61,7 +60,8 @@ def recommend_items(likes, dislikes, index, similarity_series):
     return the items according to the most similar users's preferences
     '''
     # everything the user has reviewed is in their likes and dislikes
-    already_reviewed = get_user_array(likes, index).extend(get_user_array(dislikes, index))
+    already_reviewed = get_user_array(likes, index)
+    already_reviewed.extend(get_user_array(dislikes, index))
 
     list_items = []
     for user_id in similarity_series.index:
@@ -75,9 +75,9 @@ def recommend_items(likes, dislikes, index, similarity_series):
 
 
 # read in data
-movies = pd.read_csv('../data/movies.csv')
-df_likes = pd.read_csv('../data/users_likes.csv', index_col="User ID")
-df_dislikes = pd.read_csv('../data/users_dislikes.csv', index_col = "User ID")
+movies = read_csv('../data/movies.csv')
+df_likes = read_csv('../data/users_likes.csv', index_col="User ID")
+df_dislikes = read_csv('../data/users_dislikes.csv', index_col = "User ID")
 
 # select user
 user = 6925
