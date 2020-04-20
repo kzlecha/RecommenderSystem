@@ -142,5 +142,5 @@ stop = datetime.now()
 set_op_time = stop - start
 print("Time to calculate with set operations:", set_op_time)
 
-difference = set_op_time - brute_force_time
+difference = brute_force_time - set_op_time
 print("Difference in runtime:", difference)
