@@ -1,30 +1,35 @@
+# from datetime import datetime
+
 from pandas import DataFrame, Series, read_csv
 
-
-def compareInv(A,B):
+def sim(L1, L2, D1, D2):
     '''
-    @param A: list of rankings
-    @param B: list of rankings
+    @param L1: list of user1 liked
+    @param L2: list of user2 liked
+    @param D1: list of user1 disliked
+    @param D2: list of user2 disliked
     ---
-    Compare the lists and return the number of inversions
-    '''
-    numInv = 0
-    for i in range(0, len(A)):
-        for j in range(0, len(A)):
-            if A[i] != B[j] and i != j:
-                numInv = numInv + 1
-    return numInv
+    Compare the lists and return the set similarity
 
+    Similarity Calculation:
+    s(u1, u2) = (|L1 intersection L2| + |D1 intersection D2| -
+                |L1 intersection D2| - |L2 intersection D1|) / 
+                |L1 union L2 union D1 union D2|
+    '''
+    num = 0;
+    initial = len((L1.intersection(L2))) + len((D1.intersection(D2))) - len((L1.intersection(D2))) - len((L2.intersection(D1)))
+    divisor = len((L1.union(L2, D1, D2)))
+    num = initial/divisor
+    return num
 
 def get_user_array(data, index):
     '''
     @param data: matrix of n users by m items
     @param index: int index of the given user
     ---
-    return the ratings of the user
+    return the set of ratings from the user
     '''
-    return data.loc[index].values.tolist()
-
+    return set(data.loc[index])
 
 def get_similarity_series(likes, dislikes, index):
     '''
@@ -41,18 +46,14 @@ def get_similarity_series(likes, dislikes, index):
     similarity_series = Series(0, index=likes.index)
     for i in likes.index: 
         if(i != index):
-            sim = 0
-            simLikes = 0
-            simDislikes = 0
-            simLikes = compareInv(given_user_likes, get_user_array(likes,i))
-            simDislikes = compareInv(given_user_dislikes, get_user_array(dislikes,i))
-            sim = simLikes + simDislikes
-            similarity_series.loc[i] = sim
+            user_likes = get_user_array(likes, i)
+            user_dislikes = get_user_array(dislikes, i)
+            num = sim(given_user_likes, user_likes, given_user_dislikes, user_dislikes)
+            similarity_series.loc[i] = num
 
     # sort the list
-    similarity_series = similarity_series.sort_values(ascending=True)
+    similarity_series.sort_values(ascending=False)
     return similarity_series
-
 
 def recommend_items(likes, dislikes, index, similarity_series):
     '''
@@ -63,7 +64,7 @@ def recommend_items(likes, dislikes, index, similarity_series):
     '''
     # everything the user has reviewed is in their likes and dislikes
     already_reviewed = get_user_array(likes, index)
-    already_reviewed.extend(get_user_array(dislikes, index))
+    already_reviewed.update(get_user_array(dislikes, index))
 
     list_items = []
     for user_id in similarity_series.index:
