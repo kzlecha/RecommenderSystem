@@ -1,6 +1,5 @@
-# from datetime import datetime
-
 from pandas import DataFrame, Series, read_csv
+
 
 def compareInv(A,B):
     '''
@@ -16,6 +15,7 @@ def compareInv(A,B):
                 numInv = numInv + 1
     return numInv
 
+
 def get_user_array(data, index):
     '''
     @param data: matrix of n users by m items
@@ -24,6 +24,7 @@ def get_user_array(data, index):
     return the ratings of the user
     '''
     return data.loc[index].values.tolist()
+
 
 def get_similarity_series(likes, dislikes, index):
     '''
@@ -49,8 +50,9 @@ def get_similarity_series(likes, dislikes, index):
             similarity_series.loc[i] = sim
 
     # sort the list
-    similarity_series.sort_values(ascending=True)
+    similarity_series = similarity_series.sort_values(ascending=True)
     return similarity_series
+
 
 def recommend_items(likes, dislikes, index, similarity_series):
     '''
